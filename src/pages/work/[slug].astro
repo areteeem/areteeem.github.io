@@ -18,8 +18,8 @@ const { project } = Astro.props;
   <main id="content" class="page">
     <article class="case-study section">
       <a class="text-link" href="/#work">← Back to work</a>
-      <div class="section-heading" style="margin-top: 4rem"><div class="eyebrow">{project.category} · {project.year}</div><h1 class="case-title">{project.name}</h1><p class="case-lede">{project.description}</p></div>
-      <figure class="case-media"><img src={project.image} width="1600" height="1000" alt={`Editorial project image for ${project.name}`} /><figcaption>{project.role}</figcaption></figure>
+      <div class="section-heading" style="margin-top: 4rem"><div class="eyebrow">{project.label}</div><h1 class="case-title">{project.name}</h1><p class="case-lede">{project.description}</p></div>
+      <figure class:list={["case-media", `visual-${project.visual}`]}>{project.image ? <img src={project.image} width="1600" height="1000" alt={`${project.name} interface`} /> : <div class="system-visual" aria-label={`${project.name} visual placeholder`}><span></span><span></span><span></span></div>}<figcaption>{project.role}</figcaption></figure>
       <div class="case-content">
         <section><h2>Problem</h2><p>{project.problem}</p></section>
         <section><h2>Approach</h2><p>{project.approach}</p></section>

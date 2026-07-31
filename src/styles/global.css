@@ -30,6 +30,49 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-
 .eyebrow, .meta, .nav-link, .project-number, .timeline-year { font-size: .72rem; line-height: 1.25; letter-spacing: .095em; text-transform: uppercase; color: var(--ink-muted); }
 .skip { position: fixed; top: 0; left: 1rem; z-index: 20; transform: translateY(-150%); padding: .7rem 1rem; background: var(--ink); color: white; text-decoration: none; }
 .skip:focus { transform: translateY(0); }
+.presentation { display: none; }
+.presentation-launch { display: none; }
+html.deck-mode { overflow: hidden; }
+@media (min-width: 768px) {
+  html.deck-mode body { overflow: hidden; }
+  .presentation-launch { position: fixed; z-index: 11; top: 50%; inset-inline: 1rem; display: flex; justify-content: space-between; pointer-events: none; transform: translateY(-50%); }
+  .presentation-launch button { pointer-events: auto; width: 40px; height: 58px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: color-mix(in srgb, var(--surface) 92%, transparent); color: var(--ink-muted); font-size: 1.25rem; cursor: pointer; transition: color .18s var(--ease), border-color .18s var(--ease), transform .18s var(--ease); }
+  .presentation-launch button:hover { color: var(--blue); border-color: var(--blue); transform: scale(1.04); }
+  html.deck-mode .presentation-launch { display: none; }
+  html.deck-mode .site-header, html.deck-mode #content, html.deck-mode .footer { display: none; }
+  html.deck-mode .presentation { display: block; position: relative; min-height: 100dvh; overflow: hidden; background: var(--canvas); }
+  .presentation-slide { position: absolute; inset: 0; display: grid; align-items: center; padding: clamp(4rem, 9vw, 9rem) var(--page-x) clamp(5rem, 9vw, 8rem); background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 44px 44px; }
+  .slide-grid { width: min(100%, 1440px); margin: auto; display: grid; grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr); gap: clamp(2rem, 6vw, 8rem); align-items: center; }
+  .presentation h1, .presentation h2 { max-width: 11ch; font-size: clamp(3.2rem, 7vw, 7.8rem); font-weight: 650; letter-spacing: -.075em; line-height: .92; margin: 1rem 0 1.6rem; }
+  .presentation h2 { font-size: clamp(2.8rem, 5.7vw, 6.4rem); }
+  .presentation p { max-width: 58ch; color: var(--ink-muted); font-size: clamp(1rem, 1.35vw, 1.18rem); line-height: 1.6; }
+  .slide-project-grid img { width: 100%; max-height: min(67dvh, 720px); object-fit: cover; border-radius: var(--radius-lg); box-shadow: 0 18px 50px rgb(16 16 16 / 10%); }
+  .slide-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 0; background: var(--line); }
+  .slide-metrics div, .slide-list div { padding: clamp(1rem, 2vw, 1.7rem); background: var(--canvas); }
+  .slide-metrics dt { font-size: clamp(1.9rem, 3.2vw, 3.6rem); font-weight: 650; letter-spacing: -.065em; }
+  .slide-metrics dd, .slide-list dd { margin: .25rem 0 0; color: var(--ink-muted); line-height: 1.45; }
+  .slide-list { margin: 0; border-top: 1px solid var(--line); }
+  .slide-list div { border-bottom: 1px solid var(--line); padding-inline: 0; }
+  .slide-list dt { color: var(--blue); font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .slide-meta { color: var(--blue) !important; font-size: .9rem !important; }
+  .slide-signoff { align-self: end; font-size: clamp(3rem, 7vw, 7rem); font-weight: 650; letter-spacing: -.08em; line-height: .85; text-align: right; }
+  .slide-signoff span { color: var(--ink-muted); font-size: .9rem; letter-spacing: normal; }
+  .presentation-controls { position: absolute; z-index: 2; bottom: clamp(1.4rem, 3vw, 3rem); left: var(--page-x); right: var(--page-x); display: flex; align-items: center; justify-content: space-between; gap: .7rem; pointer-events: none; }
+  .presentation-controls button { pointer-events: auto; width: 44px; height: 44px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); color: var(--ink); font-size: 1.35rem; cursor: pointer; transition: transform .18s var(--ease), border-color .18s var(--ease); }
+  .presentation-controls button:hover { border-color: var(--blue); color: var(--blue); }
+  .presentation-controls button:active { transform: scale(.96); }
+  .presentation-controls span { font-size: .75rem; letter-spacing: .08em; color: var(--ink-muted); }
+  .presentation-controls [data-exit] { width: auto; padding-inline: .8rem; margin-left: auto; font-size: .74rem; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .presentation-slide { padding-top: 3.5rem; padding-bottom: 4.5rem; }
+  .slide-grid { gap: 2.5rem; }
+  .presentation h1 { font-size: clamp(2.8rem, 6.1vw, 4.8rem); }
+  .presentation h2 { font-size: clamp(2.45rem, 5vw, 4.2rem); }
+  .presentation p { font-size: 1rem; }
+  .slide-project-grid img { max-height: 46dvh; }
+  .slide-metrics div { padding: .9rem; }
+}
 
 .site-header { position: sticky; top: 0; z-index: 10; height: 70px; display: flex; align-items: center; border-bottom: 1px solid transparent; transition: background .25s var(--ease), border-color .25s var(--ease); }
 .site-header.is-scrolled { background: color-mix(in srgb, var(--canvas) 94%, transparent); border-color: var(--line); backdrop-filter: blur(10px); }

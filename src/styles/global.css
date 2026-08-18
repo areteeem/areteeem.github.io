@@ -76,6 +76,7 @@ html.deck-mode { overflow: hidden; }
 
 .site-header { position: sticky; top: 0; z-index: 10; height: 70px; display: flex; align-items: center; border-bottom: 1px solid transparent; transition: background .25s var(--ease), border-color .25s var(--ease); }
 .site-header.is-scrolled { background: color-mix(in srgb, var(--canvas) 94%, transparent); border-color: var(--line); backdrop-filter: blur(10px); }
+.site-header--static { position: relative; border-bottom-color: var(--line); }
 .nav { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 1rem; }
 .mark { font-size: .875rem; font-weight: 700; text-decoration: none; letter-spacing: -.04em; }
 .nav-links { display: flex; align-items: center; gap: clamp(.8rem, 2vw, 1.7rem); }
@@ -152,11 +153,15 @@ section { scroll-margin-top: 90px; }
 .capability small { display: block; margin-top: 1.2rem; color: var(--blue); line-height: 1.45; }
 
 .resources { border-top: 1px solid var(--line); }
+.resources-page .resources-hero { padding-block: clamp(5rem, 12vw, 10rem) clamp(3rem, 6vw, 5rem); }
+.resources-hero h1 { max-width: 11ch; margin: 1rem 0 1.5rem; font-size: clamp(3rem, 7vw, 7.4rem); letter-spacing: -.075em; line-height: .92; }
+.resources-hero p { max-width: 48ch; margin: 0; color: var(--ink-muted); font-size: clamp(1rem, 1.4vw, 1.16rem); line-height: 1.6; }
+.resources-page .resources { padding-top: 0; }
 .resources-heading { margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
 .resources-heading p { max-width: 52ch; margin: 1.2rem 0 0; color: var(--ink-muted); line-height: 1.58; }
 .resource-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 5vw, 5rem); }
 .resource-group { border-top: 1px solid var(--line); }
-.resource-group h3 { margin: 1rem 0 1.35rem; color: var(--ink-muted); font-size: .72rem; font-weight: 500; letter-spacing: .095em; text-transform: uppercase; }
+.resource-group h2, .resource-group h3 { margin: 1rem 0 1.35rem; color: var(--ink-muted); font-size: .72rem; font-weight: 500; letter-spacing: .095em; text-transform: uppercase; }
 .resource-grid { display: grid; gap: 1.15rem; }
 .resource-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .75rem 1rem; text-decoration: none; transition: color .2s var(--ease), transform .2s var(--ease); }
 .resource-row:hover { color: var(--blue); transform: translateX(4px); }

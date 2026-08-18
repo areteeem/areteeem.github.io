@@ -172,6 +172,16 @@ section { scroll-margin-top: 90px; }
 .resource-arrow { font-size: 1.1rem; color: var(--ink-quiet); transition: transform .2s var(--ease), color .2s var(--ease); }
 .resource-row:hover .resource-arrow { color: var(--blue); transform: translate(2px, -2px); }
 
+.github-stars { border-top: 1px solid var(--line); }
+.github-stars .section-heading p { max-width: 52ch; margin: 1.2rem 0 0; color: var(--ink-muted); line-height: 1.58; }
+.github-star-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); }
+.github-star { min-height: 190px; display: flex; flex-direction: column; padding: clamp(1.2rem, 2.5vw, 2rem); background: var(--canvas); color: inherit; text-decoration: none; transition: color .2s var(--ease), background .2s var(--ease); }
+.github-star:hover { background: var(--surface-subtle); color: var(--blue); }
+.github-star-meta { font-size: .78rem; font-weight: 650; letter-spacing: -.01em; }
+.github-star-meta span { margin-left: .35rem; }
+.github-star p { max-width: 48ch; margin: 1rem 0; color: var(--ink-muted); line-height: 1.5; }
+.github-star-details { display: flex; flex-wrap: wrap; gap: .45rem 1rem; margin-top: auto; color: var(--ink-quiet); font-size: .75rem; }
+
 .prompts { border-top: 1px solid var(--line); }
 .prompts-heading p { max-width: 52ch; margin: 1.2rem 0 0; color: var(--ink-muted); line-height: 1.58; }
 .prompt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); }
@@ -264,6 +274,7 @@ section { scroll-margin-top: 90px; }
   .capability:nth-child(odd) { border-right: 0; }
   .resource-groups { grid-template-columns: 1fr; gap: 2.75rem; }
   .resource-note { font-size: .9rem; }
+  .github-star-grid { grid-template-columns: 1fr; }
   .prompt-grid { grid-template-columns: 1fr; }
   .prompt-open { min-height: 230px; }
   .prompt-dialog { width: min(100% - 1rem, 960px); max-height: 94dvh; }

@@ -1,0 +1,31 @@
+Check for newly opened online hackathons that explicitly allow participants aged 13–18, and notify me only when there are new relevant opportunities.
+
+Prioritize:
+
+* global eligibility
+* software development
+* AI
+* web development
+* startup/product tracks
+
+For every matching event provide:
+
+* event name
+* organizer
+* exact age eligibility
+* geographic eligibility
+* deadline
+* hackathon dates
+* online/hybrid format
+* tracks
+* prizes if officially published
+* official event page
+* official registration link
+
+Verify eligibility, dates and registration using official organizer sources.
+
+Exclude events that are 18+.
+
+Exclude events where the age requirement cannot be verified.
+
+If there are no new qualifying hackathons, do not notify me.

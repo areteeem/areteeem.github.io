@@ -151,6 +151,56 @@ section { scroll-margin-top: 90px; }
 .capability p { max-width: 34ch; color: var(--ink-muted); line-height: 1.55; margin: 0; }
 .capability small { display: block; margin-top: 1.2rem; color: var(--blue); line-height: 1.45; }
 
+.resources { border-top: 1px solid var(--line); }
+.resources-heading { margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.resources-heading p { max-width: 52ch; margin: 1.2rem 0 0; color: var(--ink-muted); line-height: 1.58; }
+.resource-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 5vw, 5rem); }
+.resource-group { border-top: 1px solid var(--line); }
+.resource-group h3 { margin: 1rem 0 1.35rem; color: var(--ink-muted); font-size: .72rem; font-weight: 500; letter-spacing: .095em; text-transform: uppercase; }
+.resource-grid { display: grid; gap: 1.15rem; }
+.resource-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .75rem 1rem; text-decoration: none; transition: color .2s var(--ease), transform .2s var(--ease); }
+.resource-row:hover { color: var(--blue); transform: translateX(4px); }
+.resource-name { display: grid; gap: .3rem; }
+.resource-name strong { font-size: clamp(1.15rem, 1.8vw, 1.5rem); letter-spacing: -.04em; }
+.resource-name small { color: var(--ink-quiet); font-size: .77rem; }
+.resource-note { grid-column: 1 / -1; max-width: 48ch; color: var(--ink-muted); font-size: .94rem; line-height: 1.5; }
+.resource-arrow { font-size: 1.1rem; color: var(--ink-quiet); transition: transform .2s var(--ease), color .2s var(--ease); }
+.resource-row:hover .resource-arrow { color: var(--blue); transform: translate(2px, -2px); }
+
+.prompts { border-top: 1px solid var(--line); }
+.prompts-heading p { max-width: 52ch; margin: 1.2rem 0 0; color: var(--ink-muted); line-height: 1.58; }
+.prompt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); }
+.prompt-card { background: var(--canvas); }
+.prompt-open { width: 100%; min-height: 265px; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.25rem, 2.5vw, 2.25rem); border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; transition: background .2s var(--ease), color .2s var(--ease); }
+.prompt-open:hover { background: var(--surface-subtle); color: var(--blue); }
+.prompt-open:active { transform: scale(.99); }
+.prompt-card-top { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.prompt-category, .prompt-open-label, .prompt-updated { color: var(--ink-muted); font-size: .72rem; letter-spacing: .075em; text-transform: uppercase; }
+.prompt-open-label { color: var(--blue); letter-spacing: .03em; text-transform: none; }
+.prompt-open h3 { margin: clamp(1.8rem, 4vw, 3.5rem) 0 .75rem; font-size: clamp(1.5rem, 2.4vw, 2.25rem); letter-spacing: -.05em; }
+.prompt-open p { max-width: 40ch; margin: 0; color: var(--ink-muted); line-height: 1.52; }
+.prompt-tags { display: flex; flex-wrap: wrap; gap: .35rem .75rem; margin-top: 1.2rem; color: var(--ink-quiet); font-size: .78rem; }
+.prompt-tags span::before { content: "#"; color: var(--blue); }
+.prompt-updated { margin-top: auto; padding-top: 1.6rem; font-size: .65rem; letter-spacing: .04em; text-transform: none; }
+.prompt-dialog { width: min(100% - 2rem, 960px); max-height: min(88dvh, 900px); padding: 0; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: var(--canvas); color: var(--ink); box-shadow: 0 24px 80px rgb(0 0 0 / 20%); }
+.prompt-dialog::backdrop { background: rgb(16 16 16 / 48%); }
+.prompt-dialog-shell { max-height: min(88dvh, 900px); display: grid; grid-template-rows: auto auto auto minmax(0, 1fr) auto; }
+.prompt-dialog-header, .prompt-dialog-footer { padding: clamp(1.2rem, 3vw, 2.3rem); }
+.prompt-dialog-header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); }
+.prompt-dialog-header h2 { margin: .55rem 0 0; font-size: clamp(1.75rem, 4vw, 3.25rem); letter-spacing: -.065em; line-height: .95; }
+.prompt-close, .prompt-dialog-actions button { border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit; }
+.prompt-close { min-height: 38px; padding: 0 .75rem; white-space: nowrap; }
+.prompt-dialog-description { margin: 0; padding: 1.1rem clamp(1.2rem, 3vw, 2.3rem); color: var(--ink-muted); line-height: 1.5; }
+.prompt-dialog-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .55rem; padding: 0 clamp(1.2rem, 3vw, 2.3rem) 1.1rem; border-bottom: 1px solid var(--line); }
+.prompt-dialog-actions button { min-height: 38px; padding: 0 .75rem; font-size: .85rem; }
+.prompt-dialog-actions button:hover, .prompt-close:hover { color: var(--blue); border-color: var(--blue); }
+.prompt-dialog-actions span { min-height: 1em; color: var(--blue); font-size: .8rem; }
+.prompt-dialog-body { min-height: 0; overflow: auto; padding: clamp(1.2rem, 3vw, 2.3rem); }
+.prompt-dialog-body pre { margin: 0; white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: clamp(.78rem, 1.2vw, .92rem); line-height: 1.7; color: var(--ink-muted); }
+.prompt-dialog-footer { border-top: 1px solid var(--line); color: var(--ink-muted); font-size: .86rem; line-height: 1.5; }
+.prompt-dialog-footer > span { color: var(--blue); font-size: .78rem; }
+.prompt-dialog-footer p { margin: .85rem 0 0; }
+
 .recognition { border-top: 1px solid var(--line); }
 .timeline { border-top: 1px solid var(--line); }
 .timeline-item { display: grid; grid-template-columns: minmax(100px, 2fr) minmax(0, 10fr); gap: 1rem; padding-block: 1.5rem; border-bottom: 1px solid var(--line); }
@@ -207,6 +257,14 @@ section { scroll-margin-top: 90px; }
   .impact-grid div { min-height: 150px; }
   .capability-grid { grid-template-columns: 1fr; }
   .capability:nth-child(odd) { border-right: 0; }
+  .resource-groups { grid-template-columns: 1fr; gap: 2.75rem; }
+  .resource-note { font-size: .9rem; }
+  .prompt-grid { grid-template-columns: 1fr; }
+  .prompt-open { min-height: 230px; }
+  .prompt-dialog { width: min(100% - 1rem, 960px); max-height: 94dvh; }
+  .prompt-dialog-shell { max-height: 94dvh; }
+  .prompt-dialog-header { padding: 1.15rem; }
+  .prompt-dialog-description, .prompt-dialog-actions, .prompt-dialog-body, .prompt-dialog-footer { padding-inline: 1.15rem; }
   .timeline-item { grid-template-columns: 76px 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {

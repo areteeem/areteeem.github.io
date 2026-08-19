@@ -95,25 +95,44 @@ const otherResourceTags = resourceTags.filter(tag => !featuredResourceTags.inclu
     const resourceCategories = document.querySelectorAll("[data-resource-category]");
     const resourceEmpty = document.querySelector("[data-resource-empty]");
     const resourceGroups = document.querySelector(".resource-groups");
-    resourceCategories.forEach(category => {
-      const cards = [...category.querySelectorAll("[data-resource-card]")];
-      if (cards.length <= 4) return;
-      cards.slice(4).forEach(card => card.setAttribute("data-resource-extra", ""));
-      const heading = category.querySelector("h2");
-      heading?.insertAdjacentHTML("afterend", `<button type="button" class="resource-see-more" aria-expanded="false">See more <span aria-hidden="true">↓</span></button>`);
-    });
-    document.querySelectorAll(".resource-see-more").forEach(button => button.addEventListener("click", () => {
-      const category = button.closest("[data-resource-category]");
-      const expanded = category?.classList.toggle("is-expanded");
-      button.setAttribute("aria-expanded", String(expanded));
-      button.innerHTML = `${expanded ? "Show less" : "See more"} <span aria-hidden="true">${expanded ? "↑" : "↓"}</span>`;
-    }));
+    let resourceExpandControl;
+    resourceCategories.forEach(category => [...category.querySelectorAll("[data-resource-card]")].slice(4).forEach(card => card.setAttribute("data-resource-extra", "")));
+    if (resourceGroups?.querySelector("[data-resource-extra]")) {
+      resourceExpandControl = document.createElement("button");
+      resourceExpandControl.type = "button";
+      resourceExpandControl.className = "collection-see-more";
+      resourceExpandControl.setAttribute("aria-expanded", "false");
+      resourceExpandControl.innerHTML = `See more resources <span aria-hidden="true">↓</span>`;
+      resourceGroups.insertAdjacentElement("afterend", resourceExpandControl);
+      resourceExpandControl.addEventListener("click", () => {
+        const expanded = resourceGroups.classList.toggle("is-expanded");
+        resourceExpandControl.setAttribute("aria-expanded", String(expanded));
+        resourceExpandControl.innerHTML = `${expanded ? "Show fewer resources" : "See more resources"} <span aria-hidden="true">${expanded ? "↑" : "↓"}</span>`;
+      });
+    }
+    const githubGrid = document.querySelector(".github-star-grid");
+    const githubCards = githubGrid ? [...githubGrid.querySelectorAll(".github-star")] : [];
+    if (githubGrid && githubCards.length > 6) {
+      githubCards.slice(6).forEach(card => card.setAttribute("data-github-extra", ""));
+      const githubExpandControl = document.createElement("button");
+      githubExpandControl.type = "button";
+      githubExpandControl.className = "collection-see-more";
+      githubExpandControl.setAttribute("aria-expanded", "false");
+      githubExpandControl.innerHTML = `See more starred projects <span aria-hidden="true">↓</span>`;
+      githubGrid.insertAdjacentElement("afterend", githubExpandControl);
+      githubExpandControl.addEventListener("click", () => {
+        const expanded = githubGrid.classList.toggle("is-expanded");
+        githubExpandControl.setAttribute("aria-expanded", String(expanded));
+        githubExpandControl.innerHTML = `${expanded ? "Show fewer starred projects" : "See more starred projects"} <span aria-hidden="true">${expanded ? "↑" : "↓"}</span>`;
+      });
+    }
     resourceFilterButtons.forEach(button => button.addEventListener("click", () => {
       const selected = button.dataset.resourceFilter;
       let visibleCards = 0;
       resourceFilterButtons.forEach(item => { const active = item === button; item.classList.toggle("is-active", active); item.setAttribute("aria-pressed", String(active)); });
       resourceCards.forEach(card => { const visible = selected === "all" || card.dataset.resourceTags?.split(" ").includes(selected); card.hidden = !visible; if (visible) visibleCards += 1; });
       resourceGroups?.classList.toggle("is-filtering", selected !== "all");
+      if (resourceExpandControl) resourceExpandControl.hidden = selected !== "all";
       resourceCategories.forEach(category => { category.hidden = !category.querySelector("[data-resource-card]:not([hidden])"); });
       if (resourceEmpty) resourceEmpty.hidden = visibleCards > 0;
     }));

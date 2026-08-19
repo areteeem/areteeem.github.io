@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import "../../styles/global.css";
-import { projects } from "../../data/projects";
+import { projects, socials } from "../../data/projects";
 
 export function getStaticPaths() {
   return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
@@ -13,20 +13,30 @@ const { project } = Astro.props;
 <BaseLayout title={`${project.name} | Artem`} description={project.description}>
   <a class="skip" href="#content">Skip to content</a>
   <header class="site-header is-scrolled">
-    <nav class="page nav" aria-label="Primary navigation"><a class="mark" href="/" aria-label="Artem Kachan, home">Artem K.</a><div class="nav-links"><a class="nav-link" href="/#work">Work</a><a class="nav-link" href="/#about">About</a><a class="nav-link" href="https://github.com/areteeem">GitHub</a></div></nav>
+    <nav class="page nav" aria-label="Primary navigation"><a class="mark" href="/" aria-label="Artem Kachan, home">Artem K.</a><div class="nav-links"><a class="nav-link" href="/#work">Work</a><a class="nav-link" href="/research/">Research</a><a class="nav-link" href="/#about">About</a><a class="nav-link" href="/#contact">Contact</a><a class="nav-link" href={socials.cv}>CV ↗</a></div></nav>
   </header>
   <main id="content" class="page">
     <article class="case-study section">
       <a class="text-link" href="/#work">← Back to work</a>
       <div class="section-heading" style="margin-top: 4rem"><div class="eyebrow">{project.label}</div><h1 class="case-title">{project.name}</h1><p class="case-lede">{project.description}</p>{project.externalUrl && <a class="text-link" href={project.externalUrl} target="_blank" rel="noreferrer">Visit tutpro.org <span aria-hidden="true">↗</span></a>}</div>
-      {project.image && <figure class="case-media"><img src={project.image} width="1600" height="1200" loading="eager" decoding="async" alt={`${project.name} interface`} /><figcaption>{project.role}</figcaption></figure>}
+      {project.image && <figure class="case-media"><button class="case-media-open" type="button" data-media-open aria-label={`Expand ${project.name} image`}><img src={project.image} width="1600" height="1200" loading="eager" decoding="async" alt={`${project.name} interface`} /><span>Expand image</span></button><figcaption>{project.role} · Image fits the viewport by default.</figcaption></figure>}
       <div class="case-content">
+        <section><h2>Operating context</h2><p>{project.context}</p></section>
         <section><h2>Problem</h2><p>{project.problem}</p></section>
         <section><h2>Approach</h2><p>{project.approach}</p></section>
+        <section><h2>Key product decisions</h2><ul class="case-decisions">{project.decisions.map((decision) => <li>{decision}</li>)}</ul></section>
         <section><h2>Technical architecture</h2><p>{project.architecture}</p></section>
+        {project.metrics && <section><h2>Selected numbers</h2><ul class="case-metrics">{project.metrics.map((metric) => <li>{metric}</li>)}</ul></section>}
         <section><h2>Current result</h2><p>{project.result}</p></section>
       </div>
     </article>
   </main>
-  <footer class="page footer"><span>© {new Date().getFullYear()} Artem</span><a href="/">Home</a></footer>
+  <footer class="page footer"><span>© {new Date().getFullYear()} Artem</span><div><a href={socials.linkedin}>LinkedIn ↗</a> · <a href={socials.instagram}>Instagram ↗</a> · <a href={socials.telegram}>Telegram ↗</a></div></footer>
+  {project.image && <dialog class="media-dialog" data-media-dialog aria-label={`${project.name} image viewer`}><button type="button" class="media-dialog-close" data-media-close>Close <span aria-hidden="true">×</span></button><img src={project.image} width="1600" height="1200" decoding="async" alt={`${project.name} interface`} /></dialog>}
+  <script>
+    const dialog = document.querySelector<HTMLDialogElement>("[data-media-dialog]");
+    document.querySelector("[data-media-open]")?.addEventListener("click", () => dialog?.showModal());
+    document.querySelector("[data-media-close]")?.addEventListener("click", () => dialog?.close());
+    dialog?.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  </script>
 </BaseLayout>

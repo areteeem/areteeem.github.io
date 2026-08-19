@@ -43,7 +43,6 @@ const resources: ResourceCategory[] = [
     { name: "JSON Crack", url: "https://jsoncrack.com/", note: "Turns JSON and other structured data into interactive visual maps.", tags: ["json", "developer-tools", "visualization", "data"] },
   ] },
   { category: "Reading & Summarization", items: [
-    { name: "TLDR This", url: "https://www.tldrthis.com/", note: "A text and article summarization tool. The free tier includes unlimited basic key-sentence summaries, but only 10 advanced AI summaries as a one-time allowance.", tags: ["reading", "summarization", "ai"] },
     { name: "Project Gutenberg", url: "https://www.gutenberg.org/", note: "A deep shelf of free eBooks, especially when I want to find an older work without friction.", tags: ["reading", "books", "learning"] },
     { name: "Digitalbook.io", url: "https://digitalbook.io/", note: "Free public-domain eBooks and audiobooks in one searchable catalogue.", tags: ["reading", "books", "audiobooks"] },
     { name: "A Good Movie to Watch", url: "https://www.agoodmovietowatch.com/", note: "Film recommendations with filters for English-language titles and free-to-watch options where available.", tags: ["movies", "english", "free"] },
@@ -95,11 +94,26 @@ const otherResourceTags = resourceTags.filter(tag => !featuredResourceTags.inclu
     const resourceCards = document.querySelectorAll("[data-resource-card]");
     const resourceCategories = document.querySelectorAll("[data-resource-category]");
     const resourceEmpty = document.querySelector("[data-resource-empty]");
+    const resourceGroups = document.querySelector(".resource-groups");
+    resourceCategories.forEach(category => {
+      const cards = [...category.querySelectorAll("[data-resource-card]")];
+      if (cards.length <= 4) return;
+      cards.slice(4).forEach(card => card.setAttribute("data-resource-extra", ""));
+      const heading = category.querySelector("h2");
+      heading?.insertAdjacentHTML("afterend", `<button type="button" class="resource-see-more" aria-expanded="false">See more <span aria-hidden="true">↓</span></button>`);
+    });
+    document.querySelectorAll(".resource-see-more").forEach(button => button.addEventListener("click", () => {
+      const category = button.closest("[data-resource-category]");
+      const expanded = category?.classList.toggle("is-expanded");
+      button.setAttribute("aria-expanded", String(expanded));
+      button.innerHTML = `${expanded ? "Show less" : "See more"} <span aria-hidden="true">${expanded ? "↑" : "↓"}</span>`;
+    }));
     resourceFilterButtons.forEach(button => button.addEventListener("click", () => {
       const selected = button.dataset.resourceFilter;
       let visibleCards = 0;
       resourceFilterButtons.forEach(item => { const active = item === button; item.classList.toggle("is-active", active); item.setAttribute("aria-pressed", String(active)); });
       resourceCards.forEach(card => { const visible = selected === "all" || card.dataset.resourceTags?.split(" ").includes(selected); card.hidden = !visible; if (visible) visibleCards += 1; });
+      resourceGroups?.classList.toggle("is-filtering", selected !== "all");
       resourceCategories.forEach(category => { category.hidden = !category.querySelector("[data-resource-card]:not([hidden])"); });
       if (resourceEmpty) resourceEmpty.hidden = visibleCards > 0;
     }));

@@ -96,7 +96,14 @@ const otherResourceTags = resourceTags.filter(tag => !featuredResourceTags.inclu
     const resourceEmpty = document.querySelector("[data-resource-empty]");
     const resourceGroups = document.querySelector(".resource-groups");
     let resourceExpandControl;
-    resourceCategories.forEach(category => [...category.querySelectorAll("[data-resource-card]")].slice(4).forEach(card => card.setAttribute("data-resource-extra", "")));
+    const resourceCardList = [...resourceCards];
+    const resourcePreviewCount = resourceCardList.length > 8 ? 8 : Math.min(4, Math.max(2, Math.ceil(resourceCardList.length / 2)));
+    resourceCardList.slice(resourcePreviewCount).forEach(card => card.setAttribute("data-resource-extra", ""));
+    const updateResourceCategoryVisibility = (showAll = false) => resourceCategories.forEach(category => {
+      const hasVisibleCard = [...category.querySelectorAll("[data-resource-card]")].some(card => !card.hidden && (showAll || !card.hasAttribute("data-resource-extra")));
+      category.hidden = !hasVisibleCard;
+    });
+    updateResourceCategoryVisibility();
     if (resourceGroups?.querySelector("[data-resource-extra]")) {
       resourceExpandControl = document.createElement("button");
       resourceExpandControl.type = "button";
@@ -108,6 +115,7 @@ const otherResourceTags = resourceTags.filter(tag => !featuredResourceTags.inclu
         const expanded = resourceGroups.classList.toggle("is-expanded");
         resourceExpandControl.setAttribute("aria-expanded", String(expanded));
         resourceExpandControl.innerHTML = `${expanded ? "Show fewer resources" : "See more resources"} <span aria-hidden="true">${expanded ? "↑" : "↓"}</span>`;
+        updateResourceCategoryVisibility(expanded);
       });
     }
     const githubGrid = document.querySelector(".github-star-grid");
@@ -133,7 +141,7 @@ const otherResourceTags = resourceTags.filter(tag => !featuredResourceTags.inclu
       resourceCards.forEach(card => { const visible = selected === "all" || card.dataset.resourceTags?.split(" ").includes(selected); card.hidden = !visible; if (visible) visibleCards += 1; });
       resourceGroups?.classList.toggle("is-filtering", selected !== "all");
       if (resourceExpandControl) resourceExpandControl.hidden = selected !== "all";
-      resourceCategories.forEach(category => { category.hidden = !category.querySelector("[data-resource-card]:not([hidden])"); });
+      updateResourceCategoryVisibility(selected !== "all" || resourceGroups?.classList.contains("is-expanded"));
       if (resourceEmpty) resourceEmpty.hidden = visibleCards > 0;
     }));
     const dialog = document.querySelector("[data-prompt-dialog]");

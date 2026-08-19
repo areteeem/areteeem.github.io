@@ -82,6 +82,7 @@ html.deck-mode { overflow: hidden; }
 .nav-links { display: flex; align-items: center; gap: clamp(.8rem, 2vw, 1.7rem); }
 .nav-link { text-decoration: none; letter-spacing: .03em; text-transform: none; font-size: .8rem; color: var(--ink-muted); transition: color .2s var(--ease); }
 .nav-link:hover { color: var(--blue); }
+.menu-toggle { display: none; }
 
 .hero { min-height: calc(100dvh - 70px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(260px, 5fr); gap: clamp(2rem, 5vw, 7rem); align-items: center; padding-block: clamp(3.5rem, 8vh, 6rem); position: relative; overflow: hidden; }
 .hero-copy { position: relative; z-index: 1; max-width: 780px; }
@@ -287,8 +288,20 @@ section { scroll-margin-top: 90px; }
 }
 @media (max-width: 720px) {
   .site-header { height: 62px; }
-  .nav-links { gap: .65rem; overflow-x: auto; }
-  .nav-link { font-size: .72rem; white-space: nowrap; }
+  .nav { position: relative; }
+  .menu-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: 40px; padding: 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-size: .78rem; font-weight: 650; }
+  .menu-toggle-icon, .menu-toggle-icon::before, .menu-toggle-icon::after { display: block; width: 17px; height: 1px; background: currentColor; transition: transform .2s var(--ease), opacity .2s var(--ease); }
+  .menu-toggle-icon { position: relative; }
+  .menu-toggle-icon::before, .menu-toggle-icon::after { content: ""; position: absolute; left: 0; }
+  .menu-toggle-icon::before { top: -5px; }
+  .menu-toggle-icon::after { top: 5px; }
+  .nav.is-menu-open .menu-toggle-icon { background: transparent; }
+  .nav.is-menu-open .menu-toggle-icon::before { transform: translateY(5px) rotate(45deg); }
+  .nav.is-menu-open .menu-toggle-icon::after { transform: translateY(-5px) rotate(-45deg); }
+  .nav-links { position: absolute; z-index: 2; top: calc(100% + 1px); right: 0; left: 0; display: none; align-items: stretch; gap: 0; padding: .5rem clamp(1.1rem, 4vw, 1.5rem) 1rem; border-bottom: 1px solid var(--line); background: var(--canvas); box-shadow: 0 16px 28px rgb(0 0 0 / 8%); }
+  .nav.is-menu-open .nav-links { display: grid; }
+  .nav-link { min-height: 44px; display: flex; align-items: center; padding-inline: .2rem; border-bottom: 1px solid var(--line); font-size: .9rem; }
+  .nav-link:last-child { border-bottom: 0; }
   .hero { grid-template-columns: 1fr; min-height: auto; padding-block: 4rem 2rem; }
   .hero h1 { max-width: 9ch; }
   .grid-visual { min-height: 330px; margin-top: 1rem; border-top: 1px solid var(--line); border-left: 0; }
